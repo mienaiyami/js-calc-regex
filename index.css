@@ -1,0 +1,139 @@
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 20px;
+  color: #fff;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+#app-cont {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  place-items: center;
+  background: #3b4664;
+}
+
+#app-cont #app {
+  width: 350px;
+  background: #3b4664;
+  border-radius: 30px;
+}
+
+#app-cont #app .header {
+  width: 100%;
+  height: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+#app-cont #app .header h2 {
+  margin: auto;
+  font-size: 30px;
+}
+
+#app-cont #app .display input {
+  font-size: 30px;
+  padding: 25px 20px;
+  width: 100%;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: #181f32;
+  border: 0;
+  border-radius: 10px;
+  text-align: right;
+}
+
+#app-cont #app .display input:focus-visible {
+  outline: none;
+}
+
+#app-cont #app .buttons {
+  width: 100%;
+  padding: 20px 20px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  display: -ms-grid;
+  display: grid;
+  margin-top: 20px;
+  border-radius: 10px;
+  -ms-grid-columns: 1fr 1fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+  -ms-grid-rows: auto auto auto auto;
+      grid-template-rows: auto auto auto auto;
+  justify-items: stretch;
+  gap: 20px;
+  background: #252d44;
+}
+
+#app-cont #app .buttons button {
+  height: 40px;
+  background: #eae3db;
+  color: #4a4e59;
+  font-weight: 800;
+  border: none;
+  border-radius: 5px;
+  border-bottom: 3px solid #b2a296;
+}
+
+#app-cont #app .buttons button:focus {
+  border-bottom: none;
+  border-top: 3px solid #b2a296;
+}
+
+#app-cont #app .buttons .enter-btn {
+  -ms-grid-row: 5;
+  -ms-grid-row-span: 2;
+  grid-row: 5 / span 2;
+  grid-column: span 2;
+  width: 100%;
+  background: #647299;
+  color: #fff;
+  border-bottom: 3px solid #414e71;
+}
+
+#app-cont #app .buttons .enter-btn:focus {
+  border-bottom: none;
+  border-top: 3px solid #414e71;
+}
+
+#app-cont #app .buttons .del-btn {
+  background: #647299;
+  color: #fff;
+  border-bottom: 3px solid #414e71;
+}
+
+#app-cont #app .buttons .del-btn:focus {
+  border-bottom: none;
+  border-top: 3px solid #414e71;
+}
+
+#app-cont #app .buttons .reset-btn {
+  -ms-grid-row: 5;
+  -ms-grid-row-span: 2;
+  grid-row: 5 / span 2;
+  grid-column: span 2;
+  width: 100%;
+  background: #647299;
+  color: #fff;
+  border-bottom: 3px solid #414e71;
+}
+
+#app-cont #app .buttons .reset-btn:focus {
+  border-bottom: none;
+  border-top: 3px solid #414e71;
+}
+/*# sourceMappingURL=index.css.map */
