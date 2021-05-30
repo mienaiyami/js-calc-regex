@@ -22,6 +22,7 @@ const Enter = $("#calc-enter");
 const solArray = [];
 
 const numKey = [Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine];
+
 btnClicks();
 function btnClicks() {
     for (let i = 0; i < numKey.length; i++) {
