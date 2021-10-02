@@ -58,7 +58,7 @@ function btnClicks() {
 }
 function addToInput(i, pos) {
     let x = input.value;
-    let abc = /(\+|\-|\*|\/|\.)/g;
+    let abc = /(\+|\- |\*|\/|\.)/g;
     if (i == "+" || i == "-" || i == "*" || i == "/" || i == ".") {
         if (abc.test(x.charAt(x.length - 1))) {
             input.value = x.substring(0, x.length - 1) + i;
@@ -151,7 +151,8 @@ function keyClicks(e) {
         addToInput(e.key, pos);
         return;
     }
-    let abc = /([a-z]|\`|\~|\!|\@|\#|\$|\%|\^|\&|\_|\[|\]|\{|\}|\'|\"|\;|\:|\<|\>|\?|\=|\\)/g;
+    let abc =
+        /([a-z]|\`|\~|\!|\@|\#|\$|\%|\^|\&|\_|\[|\]|\{|\}|\'|\"|\;|\:|\<|\>|\?|\=|\\)/g;
     if (abc.test(e.key)) {
         return;
     }
