@@ -5,7 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Calculator</title>
         <link rel="stylesheet" href="./index.css" />
-        <script src="../../jquery-3.5.1.min.js"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
         <div id="app-cont">
@@ -15,24 +19,64 @@
                     <input type="text" placeholder="0" id="displayInput" />
                 </div>
                 <div class="buttons">
-                    <button class="num-btn" id="calc-seven">7</button>
-                    <button class="num-btn" id="calc-eight">8</button>
-                    <button class="num-btn" id="calc-nine">9</button>
-                    <button class="del-btn" id="calc-del">DEL</button>
-                    <button class="num-btn" id="calc-six">6</button>
-                    <button class="num-btn" id="calc-five">5</button>
-                    <button class="num-btn" id="calc-four">4</button>
-                    <button class="ope-btn" id="calc-plus">+</button>
-                    <button class="num-btn" id="calc-one">1</button>
-                    <button class="num-btn" id="calc-two">2</button>
-                    <button class="num-btn" id="calc-three">3</button>
-                    <button class="ope-btn" id="calc-minus">-</button>
-                    <button class="ope-btn" id="calc-decimal">.</button>
-                    <button class="num-btn" id="calc-zero">0</button>
-                    <button class="ope-btn" id="calc-divide">/</button>
-                    <button class="ope-btn" id="calc-multiply">x</button>
-                    <button class="reset-btn" id="calc-reset">RESET</button>
-                    <button class="enter-btn" id="calc-enter">=</button>
+                    <button data-value="7" class="num-btn" id="calc-seven">
+                        7
+                    </button>
+                    <button data-value="8" class="num-btn" id="calc-eight">
+                        8
+                    </button>
+                    <button data-value="9" class="num-btn" id="calc-nine">
+                        9
+                    </button>
+                    <button data-value="del" class="del-btn" id="calc-del">
+                        DEL
+                    </button>
+                    <button data-value="6" class="num-btn" id="calc-six">
+                        6
+                    </button>
+                    <button data-value="5" class="num-btn" id="calc-five">
+                        5
+                    </button>
+                    <button data-value="4" class="num-btn" id="calc-four">
+                        4
+                    </button>
+                    <button data-value="+" class="ope-btn" id="calc-plus">
+                        +
+                    </button>
+                    <button data-value="1" class="num-btn" id="calc-one">
+                        1
+                    </button>
+                    <button data-value="2" class="num-btn" id="calc-two">
+                        2
+                    </button>
+                    <button data-value="3" class="num-btn" id="calc-three">
+                        3
+                    </button>
+                    <button data-value="-" class="ope-btn" id="calc-minus">
+                        -
+                    </button>
+                    <button data-value="." class="ope-btn" id="calc-decimal">
+                        .
+                    </button>
+                    <button data-value="0" class="num-btn" id="calc-zero">
+                        0
+                    </button>
+                    <button data-value="/" class="ope-btn" id="calc-divide">
+                        /
+                    </button>
+                    <button data-value="*" class="ope-btn" id="calc-multiply">
+                        *
+                    </button>
+                    <button
+                        data-value="reset"
+                        class="reset-btn"
+                        id="calc-reset"
+                    >
+                        RESET
+                    </button>
+                    <button data-value="=" class="enter-btn" id="calc-enter">
+                        =
+                    </button>
                 </div>
             </div>
         </div>

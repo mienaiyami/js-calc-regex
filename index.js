@@ -23,56 +23,7 @@ const solArray = [];
 
 const numKey = [Zero, One, Two, Three, Four, Five, Six, Seven, Eight, Nine];
 
-btnClicks();
-function btnClicks() {
-    for (let i = 0; i < numKey.length; i++) {
-        numKey[i].on("click", () => {
-            addToInput(i);
-        });
-    }
-    Dec.on("click", () => {
-        addToInput(".");
-    });
-    Plus.on("click", () => {
-        addToInput("+");
-    });
-    Minus.on("click", () => {
-        addToInput("-");
-    });
-    Div.on("click", () => {
-        addToInput("/");
-    });
-    Mult.on("click", () => {
-        addToInput("*");
-    });
-    Del.on("click", () => {
-        let x = input.value;
-        input.value = x.substring(0, x.length - 1);
-    });
-    Reset.on("click", () => {
-        input.value = "";
-    });
-    Enter.on("click", () => {
-        doCalc();
-    });
-}
-function addToInput(i, pos) {
-    let x = input.value;
-    let abc = /(\+|\- |\*|\/|\.)/g;
-    if (i == "+" || i == "-" || i == "*" || i == "/" || i == ".") {
-        if (abc.test(x.charAt(x.length - 1))) {
-            input.value = x.substring(0, x.length - 1) + i;
-            return;
-        }
-    }
-    if (x == "" && /(\+|\*|\/|\.)/g.test(i)) {
-        return;
-    }
-    input.setSelectionRange(pos, pos);
-    input.value = x + i;
-}
-
-function doCalc() {
+const doCalc = () => {
     let calc = 0;
     let rawValue = input.value;
     let numValue = rawValue
@@ -106,29 +57,69 @@ function doCalc() {
         }
     }
     calc = calc.toString();
-    //localestring
     input.value = calc;
     console.log(numValue, operations, calc);
-}
+};
+const addToInput = (i, pos) => {
+    let x = input.value;
+    let regex = /(\+|\-|\*|\/|\.)/g;
+    if (i === "+" || i === "-" || i === "*" || i === "/" || i === ".") {
+        if (x.includes(".")) return;
+        if (regex.test(x.charAt(x.length - 1))) {
+            input.value = x.substring(0, x.length - 1) + i;
+            return;
+        }
+    }
+    if (x == "" && /(\+|\*|\/|\.)/g.test(i)) {
+        return;
+    }
+    input.setSelectionRange(pos, pos);
+    input.value = x + i;
+};
+const btnClicks = () => {
+    numKey.forEach((e) => {
+        e.on("click", () => {
+            addToInput(e.attr("data-value"));
+        });
+    });
+    Dec.on("click", () => {
+        addToInput(".");
+    });
+    Plus.on("click", () => {
+        addToInput("+");
+    });
+    Minus.on("click", () => {
+        addToInput("-");
+    });
+    Div.on("click", () => {
+        addToInput("/");
+    });
+    Mult.on("click", () => {
+        addToInput("*");
+    });
+    Del.on("click", () => {
+        let x = input.value;
+        input.value = x.substring(0, x.length - 1);
+    });
+    Reset.on("click", () => {
+        input.value = "";
+    });
+    Enter.on("click", () => {
+        doCalc();
+    });
+};
+btnClicks();
 input.oninput = () => {
     let x = input.value;
-    let abc = /([^0-9])/g;
-    if (abc.test(x)) {
-        input.value = x.split(abc).join("");
+    let regex = /([^0-9])/g;
+    if (regex.test(x)) {
+        input.value = x.split(regex).join("");
     }
-};
-document.onkeydown = (e) => {
-    keyClicks(e);
-};
-input.onkeypress = (e) => {
-    e.preventDefault();
-    keyClicks(e);
 };
 // $("#displayInput").keypress((e) => {
 //     e.preventDefault();
 // });
-function keyClicks(e) {
-    e.preventDefault();
+const keyClicks = (e) => {
     let pos = input.selectionStart || "end";
     console.log(pos);
     if (e.key == "Backspace") {
@@ -151,9 +142,19 @@ function keyClicks(e) {
         addToInput(e.key, pos);
         return;
     }
-    let abc =
+    let regex =
         /([a-z]|\`|\~|\!|\@|\#|\$|\%|\^|\&|\_|\[|\]|\{|\}|\'|\"|\;|\:|\<|\>|\?|\=|\\)/g;
-    if (abc.test(e.key)) {
+    if (regex.test(e.key)) {
         return;
     }
-}
+};
+
+document.onkeydown = (e) => {
+    if (document.activeElement !== input) {
+        keyClicks(e);
+    }
+};
+input.onkeypress = (e) => {
+    e.preventDefault();
+    keyClicks(e);
+};

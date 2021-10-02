@@ -89,9 +89,11 @@
   border-bottom: 3px solid #b2a296;
 }
 
-#app-cont #app .buttons button:focus {
+#app-cont #app .buttons button:active {
   border-bottom: none;
   border-top: 3px solid #b2a296;
+  -webkit-box-shadow: inset #0005 0px 0px 20px 0px;
+          box-shadow: inset #0005 0px 0px 20px 0px;
 }
 
 #app-cont #app .buttons .enter-btn {
@@ -105,9 +107,11 @@
   border-bottom: 3px solid #414e71;
 }
 
-#app-cont #app .buttons .enter-btn:focus {
+#app-cont #app .buttons .enter-btn:active {
   border-bottom: none;
   border-top: 3px solid #414e71;
+  -webkit-box-shadow: inset #0005 0px 0px 20px 0px;
+          box-shadow: inset #0005 0px 0px 20px 0px;
 }
 
 #app-cont #app .buttons .del-btn {
@@ -116,9 +120,11 @@
   border-bottom: 3px solid #414e71;
 }
 
-#app-cont #app .buttons .del-btn:focus {
+#app-cont #app .buttons .del-btn:active {
   border-bottom: none;
   border-top: 3px solid #414e71;
+  -webkit-box-shadow: inset #0005 0px 0px 20px 0px;
+          box-shadow: inset #0005 0px 0px 20px 0px;
 }
 
 #app-cont #app .buttons .reset-btn {
@@ -132,8 +138,10 @@
   border-bottom: 3px solid #414e71;
 }
 
-#app-cont #app .buttons .reset-btn:focus {
+#app-cont #app .buttons .reset-btn:active {
   border-bottom: none;
   border-top: 3px solid #414e71;
+  -webkit-box-shadow: inset #0005 0px 0px 20px 0px;
+          box-shadow: inset #0005 0px 0px 20px 0px;
 }
 /*# sourceMappingURL=index.css.map */

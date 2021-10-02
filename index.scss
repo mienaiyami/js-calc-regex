@@ -8,9 +8,10 @@
 }
 @mixin click-effect($color) {
     border-bottom: 3px solid $color;
-    &:focus {
+    &:active {
         border-bottom: none;
         border-top: 3px solid $color;
+        box-shadow: inset #0005 0px 0px 20px 0px;
     }
 }
 #app-cont {
