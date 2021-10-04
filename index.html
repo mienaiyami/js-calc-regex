@@ -16,7 +16,12 @@
             <div id="app">
                 <header class="header"><h2>Calculator</h2></header>
                 <div class="display">
-                    <input type="text" placeholder="0" id="displayInput" />
+                    <input
+                        type="text"
+                        placeholder="0"
+                        id="displayInput"
+                        maxlength="25"
+                    />
                 </div>
                 <div class="buttons">
                     <button data-value="7" class="num-btn" id="calc-seven">
@@ -27,6 +32,9 @@
                     </button>
                     <button data-value="9" class="num-btn" id="calc-nine">
                         9
+                    </button>
+                    <button data-value="^" class="ope-btn" id="calc-power">
+                        ^
                     </button>
                     <button data-value="del" class="del-btn" id="calc-del">
                         DEL
@@ -40,6 +48,9 @@
                     <button data-value="4" class="num-btn" id="calc-four">
                         4
                     </button>
+                    <button data-value="!" class="ope-btn" id="calc-fact">
+                        !
+                    </button>
                     <button data-value="+" class="ope-btn" id="calc-plus">
                         +
                     </button>
@@ -52,6 +63,9 @@
                     <button data-value="3" class="num-btn" id="calc-three">
                         3
                     </button>
+                    <button data-value="(" class="ope-btn" id="calc-brakOpen">
+                        (
+                    </button>
                     <button data-value="-" class="ope-btn" id="calc-minus">
                         -
                     </button>
@@ -61,8 +75,11 @@
                     <button data-value="0" class="num-btn" id="calc-zero">
                         0
                     </button>
-                    <button data-value="/" class="ope-btn" id="calc-divide">
-                        /
+                    <button data-value="%" class="ope-btn" id="calc-percent">
+                        %
+                    </button>
+                    <button data-value=")" class="ope-btn" id="calc-brakClose">
+                        )
                     </button>
                     <button data-value="*" class="ope-btn" id="calc-multiply">
                         *
@@ -76,6 +93,9 @@
                     </button>
                     <button data-value="=" class="enter-btn" id="calc-enter">
                         =
+                    </button>
+                    <button data-value="/" class="ope-btn" id="calc-divide">
+                        /
                     </button>
                 </div>
             </div>
