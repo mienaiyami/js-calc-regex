@@ -4,7 +4,7 @@
     font-family: "Trebuchet MS", sans-serif;
     font-size: 20px;
     color: #fff;
-    user-select: none;
+    box-sizing: border-box;
 }
 @mixin click-effect($color) {
     border-bottom: 3px solid $color;
@@ -14,6 +14,25 @@
         box-shadow: inset #0005 0px 0px 20px 0px;
     }
 }
+button,
+h1,
+h2,
+h3 {
+    user-select: none;
+}
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    // background: hsl(224, 26%, 31%);
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background: hsl(224, 26%, 31%);
+}
+::-webkit-scrollbar-thumb:hover {
+    background: hsl(224, 21%, 41%);
+}
 #app-cont {
     position: absolute;
     top: 0;
@@ -22,27 +41,51 @@
     height: 100%;
     display: grid;
     place-items: center;
-    background: #3b4664;
-
+    background: hsl(224, 26%, 31%);
     #app {
         width: clamp(300px, 420px, 90%);
+        position: relative;
         // width: 100%;
         // height: 600px;
-        background: #3b4664;
+        background: hsl(224, 26%, 31%);
         border-radius: 30px;
         .header {
+            position: relative;
             width: 100%;
             height: 50px;
             display: flex;
-            text-align: center;
+            align-items: center;
             justify-content: center;
             h2 {
                 margin: auto;
                 font-size: 30px;
             }
+            button {
+                position: absolute;
+                height: 40px;
+                width: 40px;
+                left: 100%;
+                transform: translate(-100%, 0);
+                display: grid;
+                place-items: center;
+                border-radius: 5px;
+                cursor: pointer;
+                background: hsl(224, 35%, 15%);
+                &:hover {
+                    background: hsl(224, 35%, 10%);
+                }
+                &:active {
+                    // background: hsl(224, 35%, 10%);
+                    transform: translate(-100%, 1px);
+                }
+                color: #fff;
+                font-weight: 800;
+                border: none;
+            }
         }
         .display {
             input {
+                height: 80px;
                 font-size: 30px;
                 padding: 25px 20px;
                 width: 100%;
@@ -61,7 +104,7 @@
             padding: 20px 20px;
             box-sizing: border-box;
             display: grid;
-            margin-top: 20px;
+            margin-top: 10px;
             border-radius: 10px;
             grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
             grid-template-rows: auto auto auto auto;
@@ -70,40 +113,97 @@
             @media (max-width: 430px) {
                 gap: 5px;
             }
-            background: #252d44;
+            background: hsl(225, 30%, 21%);
             button {
                 // width: 60px;
                 height: 40px;
                 @media (max-width: 430px) {
                     height: 50px;
                 }
-                background: #eae3db;
-                color: #4a4e59;
+                background: hsl(32, 26%, 89%);
+                &:hover {
+                    background: hsl(32, 26%, 80%);
+                }
+                color: hsl(224, 9%, 32%);
                 font-weight: 800;
                 border: none;
                 border-radius: 5px;
-                @include click-effect(#b2a296);
+                cursor: pointer;
+                @include click-effect(hsl(26, 15%, 64%));
+            }
+            .special-btn {
+                background: hsl(224, 21%, 50%);
+                color: #fff;
+                @include click-effect(hsl(224, 27%, 35%));
+                &:hover {
+                    background: hsl(224, 21%, 41%);
+                }
             }
             .enter-btn {
                 grid-row: 5 / span 2;
                 grid-column: span 2;
                 width: 100%;
-                background: #647299;
-                color: #fff;
-                @include click-effect(#414e71);
-            }
-            .del-btn {
-                background: #647299;
-                color: #fff;
-                @include click-effect(#414e71);
             }
             .reset-btn {
                 grid-row: 5 / span 2;
                 grid-column: span 2;
                 width: 100%;
-                background: #647299;
-                color: #fff;
-                @include click-effect(#414e71);
+            }
+        }
+        .history {
+            position: absolute;
+            height: 100%;
+            border-radius: 5px;
+            color: #fff;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: hsl(224, 35%, 15%);
+            padding: 10px;
+            overflow: hidden;
+            &.close {
+                visibility: hidden;
+            }
+            &.open {
+                visibility: visible;
+            }
+            .head {
+                padding: 0 10px;
+                font-size: 25px;
+                border-bottom: 1px solid hsla(30, 25%, 89%, 0.336);
+                padding-bottom: 10px;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                .closeBtn {
+                    height: 40px;
+                    width: 40px;
+                    display: grid;
+                    place-items: center;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    background: hsl(224, 35%, 15%);
+                    &:hover {
+                        background: hsl(224, 35%, 10%);
+                    }
+                    &:active {
+                        // background: hsl(224, 35%, 10%);
+                        transform: translate(0, 1px);
+                    }
+                    color: #fff;
+                    font-weight: 800;
+                    border: none;
+                }
+            }
+            .list {
+                list-style: none;
+                overflow: auto;
+                height: 100%;
+                li {
+                    border-bottom: 1px solid hsla(30, 25%, 89%, 0.185);
+                    padding: 5px;
+                }
             }
         }
     }

@@ -6,9 +6,46 @@ const operatorBtn = $(".ope-btn");
 const Del = $("#calc-del");
 const Reset = $("#calc-reset");
 const Enter = $("#calc-enter");
-
+$(".header .showHide").on("click", () => {
+    $(".history").addClass("open");
+    $(".history").removeClass("close");
+});
+$(".history .closeBtn").on("click", () => {
+    $(".history").addClass("close");
+    input.focus();
+    $(".history").removeClass("open");
+});
+const updateHistory = (history) => {
+    history.reverse();
+    let list = "";
+    history.forEach((e) => {
+        list += `<li>${e}</li>`;
+    });
+    $(".history .list ul").html(list);
+};
 const solArray = [];
 
+const testBracketAndSolve = (rawValue) => {
+    let calc;
+    if (/(\(|\))/gi.test(rawValue)) {
+        rawValue = rawValue.replace(")(", ")*(");
+        rawValue = rawValue.replace(/(\((?<=(\d).))/gi, "*(");
+        while (/(\(|\))/gi.test(rawValue)) {
+            let endBracket = rawValue.indexOf(")");
+            let startBracket = rawValue.substr(0, endBracket).lastIndexOf("(");
+            let bracketed = rawValue.substring(startBracket + 1, endBracket);
+            // console.log("ddd", bracketed);
+            let bracketSolved = solve(bracketed);
+            rawValue =
+                rawValue.slice(0, startBracket) +
+                bracketSolved +
+                rawValue.slice(endBracket + 1, rawValue.length);
+            // console.log("ddddd", rawValue);
+        }
+        let calc = solve(rawValue);
+        return calc;
+    } else return solve(rawValue);
+};
 const solve = (rawValue) => {
     let numValues = rawValue
         .split(/\,/gi)
@@ -19,14 +56,14 @@ const solve = (rawValue) => {
                 return value;
             }
         });
-    console.log(rawValue, numValues);
+    // console.log(rawValue, numValues);
     if (numValues.length > 1) {
         let operations = rawValue
             .match(/(\+|\*|\/|\^|\!|\%)/gi)
             .filter(function (value, index, arr) {
                 return value != "";
             });
-        console.log(operations);
+        // console.log(operations);
         const doBasicCalc = (num1, num2, operator) => {
             switch (operator) {
                 case "+":
@@ -44,6 +81,7 @@ const solve = (rawValue) => {
                 case "!":
                     if (parseFloat(num1) < 0) return "invalid input";
                     if (parseFloat(num1) === 0) return 1;
+                    if (parseFloat(num1) > 140) return Infinity;
                     let fact = 1;
                     for (let i = 1; i <= parseFloat(num1); i++) {
                         fact *= i;
@@ -57,9 +95,9 @@ const solve = (rawValue) => {
             while (operations.length > 0) {
                 let operatorCaret = operations.indexOf("!");
                 if (operatorCaret == -1)
-                    operatorCaret = operations.indexOf("%");
-                if (operatorCaret == -1)
                     operatorCaret = operations.indexOf("^");
+                if (operatorCaret == -1)
+                    operatorCaret = operations.indexOf("%");
                 if (operatorCaret == -1)
                     operatorCaret = operations.indexOf("/");
                 if (operatorCaret == -1)
@@ -91,7 +129,7 @@ const solve = (rawValue) => {
                               ),
                           ]
                         : [];
-                console.log(numValues, operations);
+                // console.log(numValues, operations);
             }
         })();
     }
@@ -99,7 +137,7 @@ const solve = (rawValue) => {
     calc = calc.toString();
     return calc;
 };
-
+const history = [];
 const doCalc = () => {
     let calc = 0;
     let rawValue = input.value.replace(/ +/gi, "");
@@ -109,32 +147,34 @@ const doCalc = () => {
         rawValue = rawValue.substr(0, rawValue.length - 1);
     if (
         rawValue.includes("!") &&
-        !/!0(?=(\+|\-|\*|\/|\.|\^|\%))/gi.test(rawValue) &&
-        rawValue[rawValue.length - 2] !== "!"
+        rawValue[rawValue.length - 2] !== "!" &&
+        !/!0(?=(\+|\-|\*|\/|\.|\^|\%|\(|\)))/gi.test(rawValue)
     )
         return;
-    if (/(\(|\))/gi.test(rawValue)) {
-        while (/(\(|\))/gi.test(rawValue)) {
-            let startBracket = rawValue.indexOf("(");
-            let endBracket = rawValue.indexOf(")");
-            let bracketed = rawValue.slice(startBracket + 1, endBracket);
-            let bracketSolved = solve(
-                rawValue.slice(startBracket + 1, endBracket)
-            );
-            rawValue =
-                rawValue.slice(0, startBracket) +
-                bracketSolved +
-                rawValue.slice(endBracket + 1, rawValue.length);
-            console.log("ddddd", bracketed, rawValue);
-        }
-    }
-    calc = solve(rawValue);
+    // console.log("aaa", rawValue);
+    calc = parseFloat(testBracketAndSolve(rawValue));
+    if (calc == undefined || isNaN(calc)) calc = 0;
+    history.push(input.value + " = " + calc);
+    updateHistory(history);
     input.value = calc;
-    console.log("calc", calc);
+    // console.log("calc", calc);
 };
 const addToInput = (i, pos) => {
     let x = input.value;
     let regex = /(\+|\-|\*|\/|\.|\^|\%|\!)/gi;
+    const countBracket = (string, type) => {
+        let count = 0;
+        for (let i = 0; i < x.length; i++) {
+            if (string[i] === type) count++;
+        }
+        return count;
+    };
+    if (
+        i === ")" &&
+        countBracket(x, "(") < countBracket(x.slice(0, pos), ")") + 1
+    ) {
+        return;
+    }
     if (
         i === "+" ||
         i === "-" ||
@@ -146,16 +186,16 @@ const addToInput = (i, pos) => {
         i === "!"
     ) {
         if (x.includes(".") && i === ".") return;
-        if (regex.test(x.charAt(pos))) {
-            //!fix
+        // console.log(pos);
+        if (regex.test(x.charAt(pos - 1)) && x.charAt(pos - 1) !== "!") {
             if (x.length === 1) return;
             input.value = x.substring(0, x.length - 1) + i;
             return;
         }
     }
-    console.log(regex.test(x[0]));
+    // console.log(regex.test(x[0]));
     if (x == "" && /(\+|\*|\/|\.|\^|\%|\!)/gi.test(i)) {
-        console.log("f");
+        // console.log("f");
         return;
     }
     input.setSelectionRange(pos, pos);
@@ -179,7 +219,7 @@ const btnClicks = () => {
         input.value = "";
     });
     Enter.on("click", () => {
-        if (/(\*|\/|\-|\+|\.|\^|\!|\%)/gi.test(input.value)) {
+        if (/(\*|\/|\-|\+|\.|\^|\!|\%|(\((.*)\)))/gi.test(input.value)) {
             doCalc();
         }
     });
@@ -224,15 +264,22 @@ const keyClicks = (e) => {
     //     return;
     // }
 };
-
+document.onreadystatechange = () => {
+    input.focus();
+};
 document.onmousedown = (e) => {
     input.focus();
 };
 document.onkeydown = (e) => {
-    input.focus();
+    if (e.key === "Escape") {
+        return $(".history .closeBtn").click();
+    }
     if (document.activeElement !== input) {
         keyClicks(e);
     }
+};
+input.ondrag = (e) => {
+    e.preventDefault();
 };
 input.onkeypress = (e) => {
     e.preventDefault();
@@ -240,5 +287,5 @@ input.onkeypress = (e) => {
 };
 
 input.onblur = () => {
-    input.focus();
+    if ($(".history").hasClass("close")) input.focus();
 };
