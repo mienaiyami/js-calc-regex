@@ -1,3 +1,10 @@
+/*
+
+JS CALC USING REGEX
+I DONT KNOW WHY I DID THIS 
+
+*/
+
 const input = document.querySelector("#displayInput");
 input.value = "";
 const numBtn = $(".num-btn");
