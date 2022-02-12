@@ -22,32 +22,33 @@ $(".history .closeBtn").on("click", () => {
     input.focus();
     $(".history").removeClass("open");
 });
+const history = JSON.parse(localStorage.getItem("history")) || [];
 const updateHistory = (history) => {
-    history.reverse();
+    localStorage.setItem("history", JSON.stringify(history));
     let list = "";
     history.forEach((e) => {
         list += `<li>${e}</li>`;
     });
     $(".history .list ul").html(list);
 };
+updateHistory(history);
 const solArray = [];
 
 const testBracketAndSolve = (rawValue) => {
-    let calc;
     if (/(\(|\))/gi.test(rawValue)) {
         rawValue = rawValue.replace(")(", ")*(");
-        rawValue = rawValue.replace(/(\((?<=(\d).))/gi, "*(");
+        rawValue = rawValue.replace(/((?<=\d)\()/gi, "*(");
+        rawValue = rawValue.replace(/(\)(?=\d))/gi, ")*");
+        console.log(rawValue);
         while (/(\(|\))/gi.test(rawValue)) {
             let endBracket = rawValue.indexOf(")");
             let startBracket = rawValue.substr(0, endBracket).lastIndexOf("(");
             let bracketed = rawValue.substring(startBracket + 1, endBracket);
-            // console.log("ddd", bracketed);
             let bracketSolved = solve(bracketed);
             rawValue =
                 rawValue.slice(0, startBracket) +
                 bracketSolved +
                 rawValue.slice(endBracket + 1, rawValue.length);
-            // console.log("ddddd", rawValue);
         }
         let calc = solve(rawValue);
         return calc;
@@ -58,19 +59,15 @@ const solve = (rawValue) => {
         .split(/\,/gi)
         .join("")
         .split(/(\+|\*|\/|\^|\!|\%)/gi)
-        .filter(function (value, index, arr) {
+        .filter((value) => {
             if (!/(\+|\*|\/|\,|\^|\!|\%)/gi.test(value)) {
                 return value;
             }
         });
-    // console.log(rawValue, numValues);
     if (numValues.length > 1) {
         let operations = rawValue
             .match(/(\+|\*|\/|\^|\!|\%)/gi)
-            .filter(function (value, index, arr) {
-                return value != "";
-            });
-        // console.log(operations);
+            .filter((e) => e != "");
         const doBasicCalc = (num1, num2, operator) => {
             switch (operator) {
                 case "+":
@@ -136,7 +133,6 @@ const solve = (rawValue) => {
                               ),
                           ]
                         : [];
-                // console.log(numValues, operations);
             }
         })();
     }
@@ -144,7 +140,6 @@ const solve = (rawValue) => {
     calc = calc.toString();
     return calc;
 };
-const history = [];
 const doCalc = () => {
     let calc = 0;
     let rawValue = input.value.replace(/ +/gi, "");
@@ -158,13 +153,11 @@ const doCalc = () => {
         !/!0(?=(\+|\-|\*|\/|\.|\^|\%|\(|\)))/gi.test(rawValue)
     )
         return;
-    // console.log("aaa", rawValue);
     calc = parseFloat(testBracketAndSolve(rawValue));
     if (calc == undefined || isNaN(calc)) calc = 0;
-    history.push(input.value + " = " + calc);
+    history.unshift(input.value + " = " + calc);
     updateHistory(history);
     input.value = calc;
-    // console.log("calc", calc);
 };
 const addToInput = (i, pos) => {
     let x = input.value;
@@ -193,16 +186,13 @@ const addToInput = (i, pos) => {
         i === "!"
     ) {
         if (x.includes(".") && i === ".") return;
-        // console.log(pos);
         if (regex.test(x.charAt(pos - 1)) && x.charAt(pos - 1) !== "!") {
             if (x.length === 1) return;
             input.value = x.substring(0, x.length - 1) + i;
             return;
         }
     }
-    // console.log(regex.test(x[0]));
     if (x == "" && /(\+|\*|\/|\.|\^|\%|\!)/gi.test(i)) {
-        // console.log("f");
         return;
     }
     input.setSelectionRange(pos, pos);
@@ -232,13 +222,6 @@ const btnClicks = () => {
     });
 };
 btnClicks();
-input.oninput = () => {
-    let x = input.value;
-    let regex = /(?!(\d|(\*|\-|\+|\.|\,|\^|\(|\)|\%|\!)))./g;
-    if (regex.test(x)) {
-        input.value = x.replace(regex, "");
-    }
-};
 const keyClicks = (e) => {
     if (e.key == "Backspace") {
         Del.click();
